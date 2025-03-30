@@ -79,3 +79,24 @@ git rm file1.txt     #不仅删除了工作区的文件而且删除了暂存区�
 3.运行时生成日志文件，缓存文件，临时文件
 
 4.涉及身份，密码，口令，密钥等敏感信息文件
+
+# 一般流程
+
+```
+#1.初始化本地仓库
+git init
+#2.关联远程仓库
+git remote add origin https://github.com/用户名/仓库名.git
+#3.拉取远程变更
+git pull origin main
+#4.创建切换分支
+git checkout -b 新分支
+#5.开发修改
+git status
+#6.提交到本地仓库
+git add .               #添加所有修改
+git commit -m "提交描述" #提交到本地
+#7推送至GitHub
+git push orgin 分支名
+```
+
