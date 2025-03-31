@@ -41,6 +41,19 @@ git reset --mixed  #工作区保留暂存区不保留
 git reflog   
 ```
 
+# 分支管理
+
+## 创建与合并分支
+
+```
+git branch          #查看当前分支
+git switch -b dev #创建一个并切换到dev分支，只切换不创建不要-b
+git merge dev       #把dev分支的工作成果合并到master上
+git branch -d dev   #删除dev分支
+```
+
+
+
 ## git diff
 
 1.查看工作区，缓存区，本地仓库之间的差异
