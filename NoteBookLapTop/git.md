@@ -106,7 +106,7 @@ git pull origin main
 git checkout -b 新分支
 #5.开发修改
 git status
-#6.提交到本地仓库
+#6.提交到本地仓库（建立联系后一般这三个流程就可以了）
 git add .               #添加所有修改
 git commit -m "提交描述" #提交到本地
 #7推送至GitHub
