@@ -9,6 +9,8 @@ mv * ./     #将本目录所有文件升为上一级
 mv a.txt a1.txt #修改文件名
 exit        #ubuntu退出root
 rm test.py  #删除文件
+rm dir my_folder  #删除文件夹
+rmdir my_folder #删除指定文件夹
 sudo reboot #重启linux系统
 ```
 

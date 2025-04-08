@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <link href="https://blog.csdn.net/weixin_47626966/article/details/124861366" rel="canonical"/>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+  <meta content="webkit" name="renderer">
+   <meta content="webkit" name="force-rendering">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <meta content="always" name="referrer"/>
+    <meta content="no-siteapp" http-equiv="Cache-Control">
+     <link href="#" media="handheld" rel="alternate"/>
+     <meta content="pc" name="applicable-device"/>
+     <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"/>
+     <title>
+      VLN：在Ubuntu16配置Room-to-Room (R2R) Navigation Task教程演示-CSDN博客
+     </title>
+     <meta content="room-to-room (r2r)" name="keywords"/>
+     <meta content='{"autorun":true,"install":true,"keyword":"room-to-room (r2r)"}' name="csdn-baidu-search"/>
+     <meta content="文章浏览阅读827次，点赞2次，收藏2次。本文档详细介绍了如何在Ubuntu16上配置Room-to-Room (R2R) 导航任务，包括升级Pytorch，安装Pytorch-Transformer，下载并准备Matterport3D的数据，以及进行测试的步骤。" name="description"/>
+     <link href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-097f33faa6.min.css" rel="stylesheet" type="text/css"/>
+     <link href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-sea/skin-sea-d3a08c2048.min.css" rel="stylesheet" type="text/css"/>
+     <meta content='{"type":"0","fixModel":"1"}' name="toolbar"/>
+     <link href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css" rel="stylesheet" type="text/css"/>
+     <style>
+      .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+     </style>
+    </meta>
+   </meta>
+  </meta>
+  <style type="text/css">
+   * { user-select: text; } pre{max-height: none!important; overflow-y: hidden;}
+  </style>
+ </head>
+ <body class="nodata" style="">
+  <link href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css" rel="stylesheet"/>
+  <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css" rel="stylesheet">
+   <link href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css" rel="stylesheet">
+    <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;">
+     <div class="container clearfix container-concision" id="mainBox">
+      <main>
+       <div class="blog-content-box">
+        <div class="article-header-box">
+         <div class="article-header">
+          <div class="article-title-box">
+           <h1 class="title-article" id="articleContentId">
+            VLN：在Ubuntu16配置Room-to-Room (R2R) Navigation Task教程演示
+           </h1>
+          </div>
+          <div class="article-info-box">
+           <div class="article-bar-top">
+            <img alt="" class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png"/>
+            <div class="bar-content">
+             <a class="article-vip-box" data-report-click='{"spm":"3001.10404"}' data-report-query="spm=3001.10404" data-report-view='{"spm":"3001.10404"}' href="https://mall.csdn.net/vip" target="_blank">
+              <img alt="" class="article-vip-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/identityVipNew.png"/>
+             </a>
+             <a class="follow-nickName" href="https://blog.csdn.net/weixin_47626966" rel="noopener" target="_blank" title="遗落星球">
+              遗落星球
+             </a>
+             <img alt="" class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png"/>
+             <span class="time">
+              已于 2022-10-04 09:36:21 修改
+             </span>
+             <div class="read-count-box">
+              <img alt="" class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png"/>
+              <span class="read-count">
+               阅读量827
+              </span>
+              <a class="un-collection" data-report-click='{"mod":"popu_823","spm":"1001.2101.3001.4232","ab":"new"}' id="blog_detail_zk_collection">
+               <img alt="" class="article-collect-img article-heard-img un-collect-status isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" style="display:inline-block"/>
+               <img alt="" class="article-collect-img article-heard-img collect-status isactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" style="display:none"/>
+               <span class="name">
+                收藏
+               </span>
+               <span class="get-collection">
+                2
+               </span>
+              </a>
+              <div class="read-count-box is-like">
+               <img alt="" class="article-read-img article-heard-img" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" style="display:none"/>
+               <img alt="" class="article-read-img article-heard-img" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" style="display:block"/>
+               <span class="read-count" id="blog-digg-num">
+                点赞数
+                            2
+               </span>
+              </div>
+             </div>
+            </div>
+           </div>
+           <div class="blog-tags-box">
+            <div class="tags-box artic-tag-box">
+             <span class="label">
+              分类专栏：
+             </span>
+             <a class="tag-link" href="https://blog.csdn.net/weixin_47626966/category_11742853.html" rel="noopener" target="_blank">
+              语言视觉导航
+             </a>
+             <span class="label">
+              文章标签：
+             </span>
+             <a class="tag-link" data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"计算机视觉","ab":"new","extra":"{\"searchword\":\"计算机视觉\"}"}' data-report-query="spm=1001.2101.3001.4223" data-report-view='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"计算机视觉","ab":"new","extra":"{\"searchword\":\"计算机视觉\"}"}' href="https://so.csdn.net/so/search/s.do?q=%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" rel="noopener" target="_blank">
+              计算机视觉
+             </a>
+             <a class="tag-link" data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"自然语言处理","ab":"new","extra":"{\"searchword\":\"自然语言处理\"}"}' data-report-query="spm=1001.2101.3001.4223" data-report-view='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"自然语言处理","ab":"new","extra":"{\"searchword\":\"自然语言处理\"}"}' href="https://so.csdn.net/so/search/s.do?q=%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" rel="noopener" target="_blank">
+              自然语言处理
+             </a>
+            </div>
+           </div>
+           <div class="up-time">
+            <span>
+             于 2022-05-19 23:15:45 首次发布
+            </span>
+           </div>
+           <div class="slide-content-box">
+            <div class="article-copyright">
+             <div class="creativecommons">
+              版权声明：本文为博主原创文章，遵循
+              <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="noopener" target="_blank">
+               CC 4.0 BY-SA
+              </a>
+              版权协议，转载请附上原文出处链接和本声明。
+             </div>
+             <div class="article-source-link">
+              本文链接：
+              <a href="https://blog.csdn.net/weixin_47626966/article/details/124861366" target="_blank">
+               https://blog.csdn.net/weixin_47626966/article/details/124861366
+              </a>
+             </div>
+            </div>
+           </div>
+           <div class="operating">
+            <a class="href-article-edit slide-toggle">
+             版权
+            </a>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div id="blogHuaweiyunAdvert">
+        </div>
+        <div class="ai-abstract-box">
+         <div class="ai-abstract">
+          <div class="abstract-content">
+           <img alt="" class="lock-img" src="https://img-home.csdnimg.cn/images/20240711042549.png"/>
+           本文档详细介绍了如何在Ubuntu16上配置Room-to-Room (R2R) 导航任务，包括升级Pytorch，安装Pytorch-Transformer，下载并准备Matterport3D的数据，以及进行测试的步骤。
+          </div>
+          <span>
+           摘要由CSDN通过智能技术生成
+          </span>
+         </div>
+        </div>
+        <article class="baidu_pl">
+         <div class="article_content clearfix" id="article_content">
+          <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css" rel="stylesheet"/>
+          <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css" rel="stylesheet"/>
+          <div class="markdown_views prism-atom-one-dark" id="content_views">
+           <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+           </svg>
+           <blockquote>
+            <p>
+             提示：文章写完后，目录可以自动生成，如何生成可参考右边的帮助文档
+            </p>
+           </blockquote>
+           <p>
+           </p>
+           <div class="toc">
+            <h4>
+             文章目录
+            </h4>
+            <ul>
+             <li>
+              <a href="#_7" rel="nofollow">
+               前言
+              </a>
+             </li>
+             <li>
+              <a href="#pytorch_14" rel="nofollow">
+               一、升级pytorch
+              </a>
+             </li>
+             <li>
+              <a href="#PytorchTransformer_30" rel="nofollow">
+               二、安装Pytorch-Transformer
+              </a>
+             </li>
+             <li>
+              <a href="#_38" rel="nofollow">
+               三、数据准备
+              </a>
+             </li>
+             <li>
+              <ul>
+               <li>
+                <ul>
+                 <li>
+                  <ul>
+                   <li>
+                    <a href="#1__Scene_features_42GB_ResNet152Places365Matterport3Dimg_features_39" rel="nofollow">
+                     1、下载 Scene features [4.2GB] (ResNet-152-Places365)到Matterport3D/img_features文件
+                    </a>
+                   </li>
+                   <li>
+                    <a href="#2matterport3Dconnectivity_connectivity_maps_238MB_44" rel="nofollow">
+                     2、查看matterport3D/connectivity内容大小，也就是 connectivity maps [23.8MB]
+                    </a>
+                   </li>
+                   <li>
+                    <a href="#3_R2R_data_58MB_47" rel="nofollow">
+                     3、下载 R2R data [5.8MB]
+                    </a>
+                   </li>
+                   <li>
+                    <a href="#4_collected_triplets_in_PREVALENT_15GBMatterport3DtasksR2Rdata_56" rel="nofollow">
+                     4、下载 collected triplets in PREVALENT [1.5GB]到Matterport3D/tasks/R2R/data文件
+                    </a>
+                   </li>
+                  </ul>
+                 </li>
+                </ul>
+               </li>
+              </ul>
+             </li>
+             <li>
+              <a href="#_59" rel="nofollow">
+               四、运行测试
+              </a>
+             </li>
+            </ul>
+           </div>
+           <p>
+           </p>
+           <hr/>
+           <h2>
+            <a id="_7">
+            </a>
+            前言
+           </h2>
+           <p>
+            上篇文章记录了matterport3D simulator的安装，在此基础上本篇将运行MP3D上的R2R项目。
+           </p>
+           <hr/>
+           <h2>
+            <a id="pytorch_14">
+            </a>
+            一、升级pytorch
+           </h2>
+           <p>
+            升级pytorch，也可以去pytorch官网 下载之前版本
+           </p>
+           <pre><code class="prism language-python">pip3 install torch<span class="token operator">==</span><span class="token number">1.7</span><span class="token number">.0</span><span class="token operator">+</span>cu110 torchvision<span class="token operator">==</span><span class="token number">0.8</span><span class="token number">.1</span><span class="token operator">+</span>cu110 torchaudio<span class="token operator">==</span><span class="token number">0.7</span><span class="token number">.0</span> <span class="token operator">-</span>f https<span class="token punctuation">:</span><span class="token operator">//</span>download<span class="token punctuation">.</span>pytorch<span class="token punctuation">.</span>org<span class="token operator">/</span>whl<span class="token operator">/</span>torch_stable<span class="token punctuation">.</span>html
+</code></pre>
+           <p>
+            <img alt="请添加图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/6baf4128841648f5de67a93e7e878fa8.png">
+             <br/>
+             验证安装：
+            </img>
+           </p>
+           <pre><code class="prism language-python">python
+<span class="token keyword">import</span> torch
+torch <span class="token punctuation">.</span>__version__
+<span class="token keyword">print</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span>version<span class="token punctuation">.</span>cuda<span class="token punctuation">)</span>
+</code></pre>
+           <p>
+            <img alt="请添加图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/c69edd2dc62f2fb67735db85b738d00b.png"/>
+           </p>
+           <h2>
+            <a id="PytorchTransformer_30">
+            </a>
+            二、安装Pytorch-Transformer
+           </h2>
+           <pre><code class="prism language-python">pip3 install <span class="token operator">-</span><span class="token operator">-</span>upgrade pip
+pip3 install sentencepiece
+pip3 install pytorch<span class="token operator">-</span>transformers
+</code></pre>
+           <h2>
+            <a id="_38">
+            </a>
+            三、数据准备
+           </h2>
+           <h5>
+            <a id="1__Scene_features_42GB_ResNet152Places365Matterport3Dimg_features_39">
+            </a>
+            1、下载 Scene features [4.2GB] (ResNet-152-Places365)到Matterport3D/img_features文件
+           </h5>
+           <p>
+            <code>
+             https://link.zhihu.com/?target=https%3A//www.dropbox.com/s/85tpa6tc3enl5ud/ResNet-152-places365.zip%3Fdl%3D1
+            </code>
+           </p>
+           <p>
+            后面运行R2R可能会报错，更改文件名为ResNet-152-imagenet.tsv。
+           </p>
+           <h5>
+            <a id="2matterport3Dconnectivity_connectivity_maps_238MB_44">
+            </a>
+            2、查看matterport3D/connectivity内容大小，也就是 connectivity maps [23.8MB]
+           </h5>
+           <p>
+            此文件在配置验证MP3D时就已经生成，如果没有或大小不同需返回MP3D寻找问题。
+           </p>
+           <h5>
+            <a id="3_R2R_data_58MB_47">
+            </a>
+            3、下载 R2R data [5.8MB]
+           </h5>
+           <p>
+            打开Matterport3D/tasks/R2R文下夹，进入确认data文件的存在，并且运行
+           </p>
+           <pre><code class="prism language-python"><span class="token punctuation">.</span> download<span class="token punctuation">.</span>sh
+</code></pre>
+           <p>
+            如果下载失败可以打开download，进入指定网址下载，“-p”后面是下载到的文件目录。
+            <br/>
+            <img alt="请添加图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/395a9e2989b7de894a9232abb7063e54.png"/>
+           </p>
+           <h5>
+            <a id="4_collected_triplets_in_PREVALENT_15GBMatterport3DtasksR2Rdata_56">
+            </a>
+            4、下载 collected triplets in PREVALENT [1.5GB]到Matterport3D/tasks/R2R/data文件
+           </h5>
+           <p>
+            <code>
+             https://link.zhihu.com/?target=https%3A//zenodo.org/record/4437864/files/prevalent_aug.json%3Fdownload%3D1
+            </code>
+           </p>
+           <h2>
+            <a id="_59">
+            </a>
+            四、运行测试
+           </h2>
+           <p>
+            回到Matterport3D目录，运行：
+           </p>
+           <pre><code class="prism language-python">python3 tasks<span class="token operator">/</span>R2R<span class="token operator">/</span>train<span class="token punctuation">.</span>py
+</code></pre>
+           <p>
+            <img alt="请添加图片描述" src="https://i-blog.csdnimg.cn/blog_migrate/ce44698c53831b539fddae3198b72d10.png"/>
+           </p>
+          </div>
+          <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-a5d25dd831.css" rel="stylesheet"/>
+          <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-e504d6a974.css" rel="stylesheet"/>
+         </div>
+        </article>
+       </div>
+       <div class="directory-boxshadow-dialog" style="display:none;">
+        <div class="directory-boxshadow-dialog-box">
+        </div>
+        <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new">
+         <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"/>
+         <div class="vip-limited-time-top">
+          确定要放弃本次机会？
+         </div>
+         <span class="vip-limited-time-text">
+          福利倒计时
+         </span>
+         <div class="limited-time-box-new">
+          <span class="time-hour">
+          </span>
+          <i>
+           :
+          </i>
+          <span class="time-minite">
+          </span>
+          <i>
+           :
+          </i>
+          <span class="time-second">
+          </span>
+         </div>
+         <div class="limited-time-vip-box">
+          <p>
+           <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"/>
+           <span class="def">
+            立减 ¥
+           </span>
+           <span class="active limited-num">
+           </span>
+          </p>
+          <span class="">
+           普通VIP年卡可用
+          </span>
+         </div>
+         <a class="limited-time-btn-new" data-report-click='{"spm":"1001.2101.3001.9621"}' data-report-query="spm=1001.2101.3001.9621" href="https://mall.csdn.net/vip">
+          立即使用
+         </a>
+        </div>
+       </div>
+       <a id="commentBox" name="commentBox">
+       </a>
+      </main>
+     </div>
+     <div class="recommend-right1 align-items-stretch clearfix" data-type="recommend" id="rightAsideConcision">
+      <aside class="recommend-right_aside">
+       <div id="recommend-right-concision">
+        <div class="flex-column aside-box groupfile" id="groupfileConcision">
+         <div class="groupfile-div1">
+          <h3 class="aside-title">
+           目录
+          </h3>
+          <div class="align-items-stretch group_item">
+           <div class="pos-box">
+            <div class="scroll-box">
+             <div class="toc-box">
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </aside>
+     </div>
+    </div>
+    <div class="mask-dark">
+    </div>
+    <div class="skin-boxshadow">
+    </div>
+    <div class="directory-boxshadow">
+    </div>
+    <div style="display:none;">
+     <img onerror='setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){window="\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74"}},3000);' src=""/>
+    </div>
+    <div class="keyword-dec-box" id="keywordDecBox">
+    </div>
+   </link>
+  </link>
+ </body>
+ <link href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css" rel="stylesheet"/>
+ <link href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-light.css" rel="stylesheet"/>
+</html>
