@@ -1,6 +1,13 @@
 ## 命令集合
 
 ```
+sudo nano ~/.bashrc  #配置环境路径
+source ~/.bashrc     #配置好环境要这样一下
+```
+
+
+
+```
 pwd         #打印当前绝对路径
 mkdir       #创建文件夹
 ls          #查看当前目录文件夹  
@@ -79,5 +86,34 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
 ```
 sudo systemctl is-active docker
+```
+
+# Ubuntu安装conda
+
+```
+https://blog.csdn.net/2301_76831056/article/details/143165738
+```
+
+## 常见问题
+
+```
+# 查看ubuntu有没有桌面环境
+echo $DISPLAY
+```
+
+
+
+# 创建普通用户
+
+```
+sudo adduser user1
+sudo usermod -aG sudo user1  # 如果需要sudo权限
+su - user1
+
+user1用户
+#场景数据集在这里放着
+Generating symlink (/home/user1/habitat_test_scences/scene_datasets/habitat-test-scenes).
+#加载测试场景
+python examples/viewer.py --scene ~/habitat_test_scences/scene_datasets/habitat-test-scenes/skokloster-castle.glb
 ```
 

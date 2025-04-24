@@ -1,6 +1,7 @@
 # 一般命令
 
 ```
-conda env remove -n 你的环境名
+conda create -n env-name      #创建环境
+conda env remove  -n env-name #删除环境
 ```
 
